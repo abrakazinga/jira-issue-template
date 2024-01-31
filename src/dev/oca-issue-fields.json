@@ -1,0 +1,289 @@
+{
+	"startAt": 0,
+	"maxResults": 50,
+	"total": 12,
+	"fields": [
+		{
+			"required": false,
+			"schema": { "type": "user", "system": "assignee" },
+			"name": "Assignee",
+			"key": "assignee",
+			"autoCompleteUrl": "https://jiradg.atlassian.net/rest/api/2/user/assignable/search?project=OCA&query=",
+			"hasDefaultValue": false,
+			"operations": ["set"],
+			"fieldId": "assignee"
+		},
+		{
+			"required": true,
+			"schema": { "type": "array", "items": "component", "system": "components" },
+			"name": "Components",
+			"key": "components",
+			"hasDefaultValue": false,
+			"operations": ["add", "set", "remove"],
+			"allowedValues": [
+				{
+					"self": "https://jiradg.atlassian.net/rest/api/2/component/29043",
+					"id": "29043",
+					"name": "(Idea) On-Demand Purchasing - Purchasing",
+					"description": "Highly enlarging our product portfolio without using our warehouse-capacities."
+				},
+				{ "self": "https://jiradg.atlassian.net/rest/api/2/component/28322", "id": "28322", "name": "Aftersale" },
+				{ "self": "https://jiradg.atlassian.net/rest/api/2/component/24524", "id": "24524", "name": "Alerting" },
+				{
+					"self": "https://jiradg.atlassian.net/rest/api/2/component/28870",
+					"id": "28870",
+					"name": "Business Intelligence Uncategorized"
+				},
+				{
+					"self": "https://jiradg.atlassian.net/rest/api/2/component/29019",
+					"id": "29019",
+					"name": "Commercial Arrangements - Sales Offer",
+					"description": "Let the automated system know about specific price-agreements to increase our margins after sales."
+				},
+				{
+					"self": "https://jiradg.atlassian.net/rest/api/2/component/29021",
+					"id": "29021",
+					"name": "Competitor Price - Sales Offer",
+					"description": "Knowing the current market situation for an attractive and fair definition of our sales price."
+				},
+				{
+					"self": "https://jiradg.atlassian.net/rest/api/2/component/29005",
+					"id": "29005",
+					"name": "Digital Article - Purchasing",
+					"description": "Conveniently delivering digital articles to the customer."
+				},
+				{ "self": "https://jiradg.atlassian.net/rest/api/2/component/25726", "id": "25726", "name": "dynamic pricing" },
+				{
+					"self": "https://jiradg.atlassian.net/rest/api/2/component/28990",
+					"id": "28990",
+					"name": "Dynamic Sales Price Proposal - Sales Offer",
+					"description": "Our dynamic Sales Price Features enable product specific automated price changes based on varous data input factors."
+				},
+				{ "self": "https://jiradg.atlassian.net/rest/api/2/component/28320", "id": "28320", "name": "Logistics" },
+				{ "self": "https://jiradg.atlassian.net/rest/api/2/component/18930", "id": "18930", "name": "Marketplace" },
+				{
+					"self": "https://jiradg.atlassian.net/rest/api/2/component/28989",
+					"id": "28989",
+					"name": "Modelbased Product Data Mapping - Product Data",
+					"description": "The mapping models support the semi-automated process of mapping the supplier data to our data structure thereby improving the customers filter and product detail page experience."
+				},
+				{ "self": "https://jiradg.atlassian.net/rest/api/2/component/24620", "id": "24620", "name": "Monitoring" },
+				{
+					"self": "https://jiradg.atlassian.net/rest/api/2/component/29041",
+					"id": "29041",
+					"name": "Offer Data Import - Provider Offer Integration",
+					"description": "Providing up-to-date offer data into the system."
+				},
+				{ "self": "https://jiradg.atlassian.net/rest/api/2/component/25725", "id": "25725", "name": "Pricing" },
+				{ "self": "https://jiradg.atlassian.net/rest/api/2/component/24223", "id": "24223", "name": "Product Availability" },
+				{
+					"self": "https://jiradg.atlassian.net/rest/api/2/component/29023",
+					"id": "29023",
+					"name": "Product Availability - Sales Offer",
+					"description": "Showing reliable availability information to the customer for each product."
+				},
+				{
+					"self": "https://jiradg.atlassian.net/rest/api/2/component/18249",
+					"id": "18249",
+					"name": "Product Data - Product Data",
+					"description": "Providing all products for the webshop and delivering high quality product information."
+				},
+				{
+					"self": "https://jiradg.atlassian.net/rest/api/2/component/29042",
+					"id": "29042",
+					"name": "Product Data Import - Provider Offer Integration",
+					"description": "Providing product information from different sources in high quality."
+				},
+				{
+					"self": "https://jiradg.atlassian.net/rest/api/2/component/18251",
+					"id": "18251",
+					"name": "Product Management Uncategorized"
+				},
+				{
+					"self": "https://jiradg.atlassian.net/rest/api/2/component/29022",
+					"id": "29022",
+					"name": "Product Pricing - Sales Offer",
+					"description": "Optimizing our sales prices to ensure startegic goals and economic growth with sales, margin and conversion."
+				},
+				{ "self": "https://jiradg.atlassian.net/rest/api/2/component/25721", "id": "25721", "name": "Product Sales" },
+				{ "self": "https://jiradg.atlassian.net/rest/api/2/component/30461", "id": "30461", "name": "Product Sets - Product Data" },
+				{
+					"self": "https://jiradg.atlassian.net/rest/api/2/component/28999",
+					"id": "28999",
+					"name": "Provider Delivery Time Estimator - Purchasing",
+					"description": "Accurate and actual delivery duration predictions per provider."
+				},
+				{
+					"self": "https://jiradg.atlassian.net/rest/api/2/component/29045",
+					"id": "29045",
+					"name": "Provider Offer - Purchasing",
+					"description": "Providing reliable and up to date offers for purchasing- and sales-decisions."
+				},
+				{
+					"self": "https://jiradg.atlassian.net/rest/api/2/component/29044",
+					"id": "29044",
+					"name": "Purchase Decision - Purchasing",
+					"description": "Ensuring that our highest demand products are in stock to offer the best combination of purchase price, quantity and delivery time to our customers."
+				},
+				{ "self": "https://jiradg.atlassian.net/rest/api/2/component/18247", "id": "18247", "name": "Purchasing" },
+				{ "self": "https://jiradg.atlassian.net/rest/api/2/component/18248", "id": "18248", "name": "Sales" },
+				{
+					"self": "https://jiradg.atlassian.net/rest/api/2/component/29000",
+					"id": "29000",
+					"name": "Sales and Autobuy Forecasting - Purchasing",
+					"description": "Predicting tomorrow's sales quantities per product to ensure best availability for the most important products."
+				},
+				{
+					"self": "https://jiradg.atlassian.net/rest/api/2/component/29020",
+					"id": "29020",
+					"name": "Sales Offer - Sales Offer",
+					"description": "Continousely defining the best sales offers for the customers in our shop."
+				},
+				{
+					"self": "https://jiradg.atlassian.net/rest/api/2/component/29006",
+					"id": "29006",
+					"name": "Target Agreement - Purchasing",
+					"description": "Making Target Agreement data available to stakeholders and the system."
+				}
+			],
+			"fieldId": "components"
+		},
+		{
+			"required": false,
+			"schema": { "type": "array", "items": "json", "custom": "com.pyxis.greenhopper.jira:gh-sprint", "customId": 10130 },
+			"name": "Sprint",
+			"key": "customfield_10130",
+			"hasDefaultValue": false,
+			"operations": ["set"],
+			"fieldId": "customfield_10130"
+		},
+		{
+			"required": false,
+			"schema": { "type": "any", "custom": "com.pyxis.greenhopper.jira:gh-epic-link", "customId": 10530 },
+			"name": "Epic Link",
+			"key": "customfield_10530",
+			"hasDefaultValue": false,
+			"operations": ["set"],
+			"fieldId": "customfield_10530"
+		},
+		{
+			"required": false,
+			"schema": {
+				"type": "team",
+				"custom": "com.atlassian.jira.plugin.system.customfieldtypes:atlassian-team",
+				"customId": 17630,
+				"configuration": { "com.atlassian.jira.plugin.system.customfieldtypes:atlassian-team": true }
+			},
+			"name": "Team",
+			"key": "customfield_17630",
+			"autoCompleteUrl": "https://jiradg.atlassian.net/gateway/api/v1/recommendations",
+			"hasDefaultValue": false,
+			"operations": ["set"],
+			"fieldId": "customfield_17630"
+		},
+		{
+			"required": false,
+			"schema": { "type": "option", "custom": "com.atlassian.jira.plugin.system.customfieldtypes:radiobuttons", "customId": 19101 },
+			"name": "Story Lane",
+			"key": "customfield_19101",
+			"hasDefaultValue": false,
+			"operations": ["set"],
+			"allowedValues": [
+				{ "self": "https://jiradg.atlassian.net/rest/api/2/customFieldOption/20841", "value": "Initiative", "id": "20841" },
+				{ "self": "https://jiradg.atlassian.net/rest/api/2/customFieldOption/20842", "value": "Fastlane", "id": "20842" },
+				{ "self": "https://jiradg.atlassian.net/rest/api/2/customFieldOption/20843", "value": "Engineering", "id": "20843" },
+				{ "self": "https://jiradg.atlassian.net/rest/api/2/customFieldOption/20862", "value": "other", "id": "20862" }
+			],
+			"fieldId": "customfield_19101"
+		},
+		{
+			"required": false,
+			"schema": { "type": "string", "system": "description" },
+			"name": "Description",
+			"key": "description",
+			"hasDefaultValue": false,
+			"operations": ["set"],
+			"fieldId": "description"
+		},
+		{
+			"required": true,
+			"schema": { "type": "issuetype", "system": "issuetype" },
+			"name": "Issue Type",
+			"key": "issuetype",
+			"hasDefaultValue": false,
+			"operations": [],
+			"allowedValues": [
+				{
+					"self": "https://jiradg.atlassian.net/rest/api/2/issuetype/7",
+					"id": "7",
+					"description": "Created by Jira Software - do not edit or delete. Issue type for a user story.",
+					"iconUrl": "https://jiradg.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/12285?size=medium",
+					"name": "Story",
+					"subtask": false,
+					"avatarId": 12285,
+					"hierarchyLevel": 0
+				}
+			],
+			"fieldId": "issuetype"
+		},
+		{
+			"required": false,
+			"schema": { "type": "array", "items": "string", "system": "labels" },
+			"name": "Labels",
+			"key": "labels",
+			"autoCompleteUrl": "https://jiradg.atlassian.net/rest/api/1.0/labels/suggest?query=",
+			"hasDefaultValue": false,
+			"operations": ["add", "set", "remove"],
+			"fieldId": "labels"
+		},
+		{
+			"required": false,
+			"schema": { "type": "issuelink", "system": "parent" },
+			"name": "Parent",
+			"key": "parent",
+			"hasDefaultValue": false,
+			"operations": ["set"],
+			"fieldId": "parent"
+		},
+		{
+			"required": true,
+			"schema": { "type": "project", "system": "project" },
+			"name": "Project",
+			"key": "project",
+			"hasDefaultValue": false,
+			"operations": ["set"],
+			"allowedValues": [
+				{
+					"self": "https://jiradg.atlassian.net/rest/api/2/project/14243",
+					"id": "14243",
+					"key": "OCA",
+					"name": "Offer Creation Area",
+					"projectTypeKey": "software",
+					"simplified": false,
+					"avatarUrls": {
+						"48x48": "https://jiradg.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/14673",
+						"24x24": "https://jiradg.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/14673?size=small",
+						"16x16": "https://jiradg.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/14673?size=xsmall",
+						"32x32": "https://jiradg.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/14673?size=medium"
+					},
+					"projectCategory": {
+						"self": "https://jiradg.atlassian.net/rest/api/2/projectCategory/10000",
+						"id": "10000",
+						"description": "All software engineering projects",
+						"name": "Product Development (productive)"
+					}
+				}
+			],
+			"fieldId": "project"
+		},
+		{
+			"required": true,
+			"schema": { "type": "string", "system": "summary" },
+			"name": "Summary",
+			"key": "summary",
+			"hasDefaultValue": false,
+			"operations": ["set"],
+			"fieldId": "summary"
+		}
+	]
+}
