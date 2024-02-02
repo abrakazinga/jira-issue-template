@@ -22,6 +22,7 @@ window.jq = $.noConflict(true)
 ;(function () {
 	'use strict'
 	jiraIssueTemplate.isReady(function () {
+		console.log('Jira Issue Template App is ready')
 		jiraIssueTemplate.addStyle()
 		jiraIssueTemplate.startApp()
 	})

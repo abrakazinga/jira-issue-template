@@ -19,6 +19,36 @@
                     </span>
                     </div>`
 
+	let app = new Vue({
+		data: {
+			message: 'Hello world!',
+			userInfo: { login: 'Unknown', public_repos: '...', public_gists: '...', followers: '...' },
+		},
+		methods: {
+			getUserId(url) {
+				let userId = ''
+				let regex = /github.com\/([^\/]*).*/
+				let found = url.match(regex)
+				if (found && found.length > 1) {
+					userId = found[1]
+					this.getUserInfo(userId)
+				}
+			},
+			getUserInfo(userId) {
+				fetch('https://api.github.com/users/' + userId)
+					.then((res) => {
+						return res.json()
+					})
+					.then((json) => {
+						this.userInfo = json
+					})
+			},
+		},
+		created: function () {
+			this.getUserId(window.location.toString())
+		},
+	})
+
 	window.jiraIssueTemplate = {
 		isReady(successCallBack) {
 			jq(document).ready(function () {
@@ -34,7 +64,7 @@
 		startApp() {
 			this.appendToBody()
 			setTimeout(() => {
-				githubApp.$mount('#jira-issue-template-app')
+				app.$mount('#jira-issue-template-app')
 			}, 3000)
 		},
 	}
