@@ -6,11 +6,12 @@
 // ==/UserScript==
 
 let jiraBaseUrl = 'https://jiradg.atlassian.net'
-let scrumTeam = 'Skyfall'
 let projectKey = 'OCA' // /rest/api/2/project
 let issueTypeId = '7' // /rest/api/2/issue/createmeta/{projectKey}/issuetypes
+let scrumTeam = 'Skyfall'
 let componentIds = ['29044', '29045'] // /rest/api/2/issue/createmeta/{projectKey}/issuetypes/{issueTypeId}
 let teamId = 'c3db8dfc-c970-4639-8138-4ccdd1179649-10' // ???
+// 99df2a6a-f151-4f2e-8d5c-4532c9404eba
 
 // -- Ab hier nichts mehr ändern
 
