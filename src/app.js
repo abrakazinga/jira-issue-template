@@ -19,33 +19,18 @@
                     </span>
                     </div>`
 
-	let app = new Vue({
-		data: {
-			message: 'Hello world!',
-			userInfo: { login: 'Unknown', public_repos: '...', public_gists: '...', followers: '...' },
-		},
-		methods: {
-			getUserId(url) {
-				let userId = ''
-				let regex = /github.com\/([^\/]*).*/
-				let found = url.match(regex)
-				if (found && found.length > 1) {
-					userId = found[1]
-					this.getUserInfo(userId)
-				}
-			},
-			getUserInfo(userId) {
-				fetch('https://api.github.com/users/' + userId)
-					.then((res) => {
-						return res.json()
-					})
-					.then((json) => {
-						this.userInfo = json
-					})
-			},
-		},
-		created: function () {
-			this.getUserId(window.location.toString())
+	let app = createApp({
+		setup() {
+			const message = ref('Hello Vue 3')
+			const userInfo = ref({})
+			onMounted(async () => {
+				const res = await fetch('https://api.github.com/users/tobyqin')
+				userInfo.value = await res.json()
+			})
+			return {
+				message,
+				userInfo,
+			}
 		},
 	})
 
