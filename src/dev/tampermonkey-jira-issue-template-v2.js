@@ -66,7 +66,7 @@ let createNewIssue = async () => {
 				key: projectKey,
 			},
 			summary: issueSummary,
-			description: '',
+			description: '',,
 			issuetype: {
 				id: issueTypeId,
 			},
