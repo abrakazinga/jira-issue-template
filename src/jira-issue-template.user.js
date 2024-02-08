@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DG Jira Issue Template
 // @namespace    https://github.com/abrakazinga/
-// @version      0.2
+// @version      0.3
 // @author       Alex Braisch
 // @description  Create Jira issues using a predefined template
 // @include      https://jiradg.atlassian.net/*
