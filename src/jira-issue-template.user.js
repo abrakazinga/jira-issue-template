@@ -374,7 +374,7 @@ const app = createApp({
 					assignee: {
 						id: userInfo.value?.accountId,
 					},
-					components: selectedComponents,
+					components: selectedComponents.value,
 					customfield_17630: selectedTeam.value.id,
 				},
 			}
@@ -392,7 +392,6 @@ const app = createApp({
 			console.log('Response:', responseData)
 
 			if (res.status === 201) {
-				alert('Issue created successfully.')
 				issueSummary.value = ''
 				toggleVisibility()
 				window.open(`https://jiradg.atlassian.net/browse/${responseData.key}`, '_blank')
