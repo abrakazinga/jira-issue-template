@@ -5,8 +5,8 @@
 // @description  Create Jira issues using a predefined template
 // @include      https://jiradg.atlassian.net/*
 // @supportURL   https://github.com/abrakazinga/jira-issue-template/issues
-// @updateURL    https://github.com/abrakazinga/jira-issue-template/raw/main/src/jira-issue-template.js
-// @downloadURL  https://github.com/abrakazinga/jira-issue-template/raw/main/src/jira-issue-template.js
+// @updateURL    https://raw.githubusercontent.com/abrakazinga/jira-issue-template/main/src/jira-issue-template.js
+// @downloadURL  https://raw.githubusercontent.com/abrakazinga/jira-issue-template/main/src/jira-issue-template.js
 // @require      https://cdn.jsdelivr.net/npm/vue@3.2.20/dist/vue.global.js
 // @require      https://cdn.tailwindcss.com
 // @grant        unsafeWindow
@@ -186,6 +186,21 @@ let appTemplate = `
                 <div class="flex items-center space-x-1">
                     <label for="components" class="text-xs uppercase text-slate-700 dark:text-slate-400">Components</label>
                 </div>
+                <ul v-if="componentsErrors.length" class="text-xs text-red-600 dark:text-red-400 m-0 p-0">
+                    <li v-for="error in componentsErrors">{{error}}</li>
+                </ul>
+                <div 
+                    class="inline-flex items-center w-fit gap-x-0.5 rounded-brand bg-blue-50 dark:bg-slate-900/10 px-2 py-1 text-xs font-medium text-blue-700 dark:text-slate-400 ring-1 ring-inset ring-blue-700/10 dark:ring-slate-700 hover:cursor-pointer"
+                    v-for="component in selectedComponents"
+                    @click="removeComponent(component.id)">
+                    {{component.name}}
+                    <div type="button" class="group relative -mr-1 h-3.5 w-3.5 rounded-sm">
+                        <span class="sr-only">Remove</span>
+                        <svg viewBox="0 0 14 14" class="h-3.5 w-3.5 stroke-slate-400/50 group-hover:stroke-slate-300/75">
+                            <path d="M4 4l6 6m0-6l-6 6" />
+                        </svg>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -198,13 +213,18 @@ let appTemplate = `
                 <div class="flex items-center space-x-1">
                     <label for="issueSummary" class="text-xs uppercase text-slate-700 dark:text-slate-400">Summary*</label>
                 </div>
+                <ul v-if="issueSummaryErrors.length" class="text-xs text-red-600 dark:text-red-400 m-0 p-0">
+                    <li v-for="error in issueSummaryErrors">{{error}}</li>
+                </ul>
                 <input id="issueSummary" v-model="issueSummary" type="text" class="dark:bg-input-bg-dark w-full min-w-96 border border-overlay-border dark:border-overlay-border-dark rounded-brand px-3 py-2 ring-2 ring-transparent hover:ring-primary dark:hover:ring-primary-dark">
             </div>
 
         </div>
 
         <div class="flex flex-col px-4 space-y-2">
-            <button @click="createNewIssue" class="whitespace nowrap px-3 py-2 font-medium bg-primary dark:bg-primary-dark text-white dark:text-slate-900 rounded-brand hover:bg-primary-hover dark:hover:bg-primary-dark-hover">
+            <button 
+                @click="createNewIssue" 
+                class="whitespace nowrap px-3 py-2 font-medium bg-primary dark:bg-primary-dark text-white dark:text-slate-900 rounded-brand hover:bg-primary-hover dark:hover:bg-primary-dark-hover">
                 Create
             </button>
         </div>
@@ -233,8 +253,13 @@ const app = createApp({
 		// Team
 		const availableTeams = ref([])
 		const selectedTeam = ref({})
+		// Components
+		const availableComponents = ref([]) // TODO: Fetch available components
+		const selectedComponents = ref([])
+		const componentsErrors = ref([])
 		// Summary
 		const issueSummary = ref('')
+		const issueSummaryErrors = ref([])
 
 		// Save state to local storage on change
 		watch([issueTemplateKey], (newValues) => {
@@ -305,10 +330,32 @@ const app = createApp({
 			selectedIssueType.value = issueTemplate.value?.fields?.issuetype ?? selectedIssueType.value
 			// Team
 			selectedTeam.value = issueTemplate.value?.fields?.customfield_17630 ?? selectedTeam.value
+			// Components
+			selectedComponents.value =
+				issueTemplate.value?.fields?.components.map((component) => ({ id: component.id, name: component.name })) ??
+				selectedComponents.value
+		}
+
+		const removeComponent = (componentId) => {
+			selectedComponents.value = selectedComponents.value.filter((component) => component.id !== componentId)
 		}
 
 		const createNewIssue = async () => {
-			console.log('Creating new issue...')
+			console.log('Trying to create a new issue...')
+
+			// Validate issue summary
+			issueSummaryErrors.value = []
+			if (!issueSummary.value) {
+				issueSummaryErrors.value.push('Summary is required.')
+			}
+
+			// Validate components
+			componentsErrors.value = []
+			if (selectedComponents.length === 0) {
+				componentsErrors.value.push('At least one component is required. Please re-load the template.')
+			}
+
+			if (issueSummaryErrors.value.length || componentsErrors.value.length) return
 
 			let url = '/rest/api/2/issue/'
 			let data = {
@@ -324,7 +371,7 @@ const app = createApp({
 					assignee: {
 						id: userInfo.value?.accountId,
 					},
-					components: issueTemplate.value?.fields?.components.map((component) => ({ id: component.id })),
+					components: selectedComponents,
 					customfield_17630: selectedTeam.value.id,
 				},
 			}
@@ -357,14 +404,19 @@ const app = createApp({
 			selectedProject,
 			selectedIssueType,
 			selectedTeam,
+			selectedComponents,
 			availableProjects,
 			availableIssueTypes,
 			availableTeams,
+			// availableComponents, // ! Not yet implemented
 			issueTemplate,
+			issueSummaryErrors,
 			loadIssueTemplate,
 			loadingIssueTemplate,
 			loadingIssueTemplateErrors,
 			createNewIssue,
+			componentsErrors,
+			removeComponent,
 		}
 	},
 	async mounted() {
