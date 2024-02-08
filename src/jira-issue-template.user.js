@@ -5,8 +5,8 @@
 // @description  Create Jira issues using a predefined template
 // @include      https://jiradg.atlassian.net/*
 // @supportURL   https://github.com/abrakazinga/jira-issue-template/issues
-// @updateURL    https://raw.githubusercontent.com/abrakazinga/jira-issue-template/main/src/jira-issue-template.js
-// @downloadURL  https://raw.githubusercontent.com/abrakazinga/jira-issue-template/main/src/jira-issue-template.js
+// @updateURL    https://github.com/abrakazinga/jira-issue-template/raw/main/src/jira-issue-template.user.js
+// @downloadURL  https://github.com/abrakazinga/jira-issue-template/raw/main/src/jira-issue-template.user.js
 // @require      https://cdn.jsdelivr.net/npm/vue@3.2.20/dist/vue.global.js
 // @require      https://cdn.tailwindcss.com
 // @grant        unsafeWindow
