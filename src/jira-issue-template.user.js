@@ -191,13 +191,15 @@ let appTemplate = `
                     <li v-for="error in componentsErrors">{{error}}</li>
                 </ul>
                 <div 
-                    class="inline-flex items-center w-fit gap-x-0.5 rounded-brand bg-blue-50 dark:bg-slate-900/10 px-2 py-1 text-xs font-medium text-blue-700 dark:text-slate-400 ring-1 ring-inset ring-blue-700/10 dark:ring-slate-700 hover:cursor-pointer"
+                    class="group inline-flex items-center w-fit gap-x-0.5 rounded-brand bg-blue-50 hover:text-red-50 hover:bg-red-600 dark:bg-slate-900/10 px-2 py-1 text-xs font-medium text-blue-700 dark:text-slate-400 ring-1 ring-inset ring-blue-700/10 dark:ring-slate-700 dark:hover:ring-red-700 hover:cursor-pointer"
                     v-for="component in selectedComponents"
-                    @click="removeComponent(component.id)">
+                    @click="removeComponent(component.id)"
+                    data-role="component"
+                    >
                     {{component.name}}
-                    <div type="button" class="group relative -mr-1 h-3.5 w-3.5 rounded-sm">
+                    <div type="button" class="relative -mr-1 h-3.5 w-3.5 rounded-sm">
                         <span class="sr-only">Remove</span>
-                        <svg viewBox="0 0 14 14" class="h-3.5 w-3.5 stroke-slate-400/50 group-hover:stroke-slate-300/75">
+                        <svg viewBox="0 0 14 14" class="h-3.5 w-3.5 stroke-slate-400/50 group-hover:stroke-red-50">
                             <path d="M4 4l6 6m0-6l-6 6" />
                         </svg>
                     </div>
@@ -491,10 +493,10 @@ let mountApp = () => {
 }
 
 let toggleVisibility = () => {
-	let templateDiv = document.getElementById('jira-issue-template')
-	if (templateDiv) {
-		templateDiv.classList.toggle('hidden')
-		templateDiv.classList.toggle('flex')
+	let overlayEl = document.getElementById('jira-issue-template')
+	if (overlayEl) {
+		overlayEl.classList.toggle('hidden')
+		overlayEl.classList.toggle('flex')
 	}
 }
 
@@ -508,10 +510,13 @@ let addButtonClickHandler = () => {
 
 let addCloseOverlayListener = (toggleButton) => {
 	document.addEventListener('click', (event) => {
-		let templateDiv = document.getElementById('jira-issue-template')
-		if (templateDiv && !templateDiv.contains(event.target) && event.target !== toggleButton) {
-			templateDiv.classList.add('hidden')
-			templateDiv.classList.remove('flex')
+		console.log(event.target)
+		let overlayEl = document.getElementById('jira-issue-template')
+		console.log(overlayEl.contains(event.target))
+
+		if (overlayEl && !overlayEl.contains(event.target) && event.target !== toggleButton && event.target.dataset.role !== 'component') {
+			overlayEl.classList.add('hidden')
+			overlayEl.classList.remove('flex')
 		}
 	})
 }
