@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DG Jira Issue Template
 // @namespace    https://github.com/abrakazinga/
-// @version      0.3.2
+// @version      0.3.3
 // @author       Alex Braisch
 // @description  Create Jira issues using a predefined template
 // @include      https://jiradg.atlassian.net/*
@@ -311,7 +311,11 @@ const app = createApp({
 			loadingIssueTemplate.value = true
 			editMode.value = false
 			issueTemplate.value = {}
+
+			// Reset errors
 			loadingIssueTemplateErrors.value = []
+			issueSummaryErrors.value = []
+			componentsErrors.value = []
 
 			const res = await fetch(`/rest/api/2/issue/${issueTemplateKey.value}`)
 			const data = await res.json()
@@ -430,14 +434,14 @@ const app = createApp({
 		}
 
 		// User Info
-		this.userInfo.value = await getMyself()
+		this.userInfo.value = await getCurrentUser()
 		// Issue Template
 		await this.loadIssueTemplate()
 	},
 	template: appTemplate,
 })
 
-let getMyself = async () => {
+let getCurrentUser = async () => {
 	const res = await fetch('/rest/api/2/myself')
 	return res.json()
 }
