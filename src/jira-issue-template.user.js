@@ -510,10 +510,7 @@ let addButtonClickHandler = () => {
 
 let addCloseOverlayListener = (toggleButton) => {
 	document.addEventListener('click', (event) => {
-		console.log(event.target)
 		let overlayEl = document.getElementById('jira-issue-template')
-		console.log(overlayEl.contains(event.target))
-
 		if (overlayEl && !overlayEl.contains(event.target) && event.target !== toggleButton && event.target.dataset.role !== 'component') {
 			overlayEl.classList.add('hidden')
 			overlayEl.classList.remove('flex')
