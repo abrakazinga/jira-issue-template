@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DG Jira Issue Template
 // @namespace    https://github.com/abrakazinga/
-// @version      0.3
+// @version      0.3.1
 // @author       Alex Braisch
 // @description  Create Jira issues using a predefined template
 // @include      https://jiradg.atlassian.net/*
@@ -354,7 +354,8 @@ const app = createApp({
 
 			// Validate components
 			componentsErrors.value = []
-			if (selectedComponents.length === 0) {
+			console.log(selectedComponents.value?.length)
+			if (!selectedComponents.value?.length) {
 				componentsErrors.value.push('At least one component is required. Please re-load the template.')
 			}
 
