@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DG Jira Issue Template
 // @namespace    https://github.com/abrakazinga/
-// @version      0.4.1
+// @version      0.4.2
 // @author       Alex Braisch
 // @description  Create Jira issues using a predefined template
 // @match      https://jiradg.atlassian.net/*
@@ -260,7 +260,7 @@ const app = createApp({
 		const availableTeams = ref([])
 		const selectedTeam = ref({})
 		// Components
-		const availableComponents = ref([]) // TODO: Fetch available components
+		//const availableComponents = ref([]) // TODO: Fetch available components
 		const selectedComponents = ref([])
 		const componentsErrors = ref([])
 		// Summary
@@ -296,7 +296,6 @@ const app = createApp({
 		)
 
 		const loadAvailableOptions = async () => {
-			console.log('Loading available options...')
 			// Load available options and set defaults if necessary
 			// Projects
 			availableProjects.value = await getAvailableProjects()
@@ -334,13 +333,9 @@ const app = createApp({
 		}
 
 		const setIssueTemplateValues = () => {
-			// Project
 			selectedProject.value = issueTemplate.value?.fields?.project ?? selectedProject.value
-			// Issue Type
 			selectedIssueType.value = issueTemplate.value?.fields?.issuetype ?? selectedIssueType.value
-			// Team
 			selectedTeam.value = issueTemplate.value?.fields?.customfield_17630 ?? selectedTeam.value
-			// Components
 			selectedComponents.value =
 				issueTemplate.value?.fields?.components.map((component) => ({ id: component.id, name: component.name })) ??
 				selectedComponents.value
@@ -351,8 +346,6 @@ const app = createApp({
 		}
 
 		const createNewIssue = async () => {
-			console.log('Trying to create a new issue...')
-
 			// Validate issue summary
 			issueSummaryErrors.value = []
 			if (!issueSummary.value) {
@@ -396,8 +389,6 @@ const app = createApp({
 
 			const responseData = await res.json()
 
-			console.log('Response:', responseData)
-
 			if (res.status === 201) {
 				issueSummary.value = ''
 				toggleVisibility()
@@ -436,9 +427,7 @@ const app = createApp({
 			this.issueTemplateKey = state.issueTemplateKey
 		}
 
-		// User Info
 		this.userInfo.value = await getCurrentUser()
-		// Issue Template
 		await this.loadIssueTemplate()
 	},
 	template: appTemplate,
@@ -466,6 +455,7 @@ let getAvailableIssueTypes = async (projectKey) => {
 	return []
 }
 
+// ! Don't know yet how to fetch available teams
 let getAvailableTeams = () => {
 	let teams = [
 		{ id: 'c3db8dfc-c970-4639-8138-4ccdd1179649-10', name: 'Skyfall' },
