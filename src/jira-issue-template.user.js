@@ -22,10 +22,10 @@
 // TODO: "Use as Template" button on existing issues, in the "More" dropdown
 
 // * Load story as template
-// ? Add "Edit" button for Project, Issue Type, and Team -> Only load available options when clicked
-// ? Add Components, only show if available
+// * Add "Edit" button for Project, Issue Type, and Team -> Only load available options when clicked
+// * Add Components, only show if available
 // ? Add Epic Key?
-// ? Multiple Stories Support
+// ? Support for creating multiple stories at once
 
 unsafeWindow.Vue = Vue
 const { createApp, ref, watch, watchEffect } = Vue
