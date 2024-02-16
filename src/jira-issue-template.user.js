@@ -4,7 +4,7 @@
 // @version      0.3.3
 // @author       Alex Braisch
 // @description  Create Jira issues using a predefined template
-// @include      https://jiradg.atlassian.net/*
+// @match      https://jiradg.atlassian.net/*
 // @supportURL   https://github.com/abrakazinga/jira-issue-template/issues
 // @updateURL    https://github.com/abrakazinga/jira-issue-template/raw/main/src/jira-issue-template.user.js
 // @downloadURL  https://github.com/abrakazinga/jira-issue-template/raw/main/src/jira-issue-template.user.js
@@ -30,7 +30,10 @@
 unsafeWindow.Vue = Vue
 const { createApp, ref, watch, watchEffect } = Vue
 
-let appMounted = false // Flag to track whether the app has been mounted
+let appId = 'create-new-issue-with-template-app'
+let appStateKey = 'create-new-issue-with-template-app-state'
+let createNewIssueWithTemplateButtonId = 'dg-create-new-issue-with-template-button'
+let createNewIssueWithTemplateOverlayId = 'create-new-issue-with-template-overlay'
 
 tailwind.config = {
 	theme: {
@@ -55,7 +58,7 @@ tailwind.config = {
 
 let appTemplate = `
 <div 
-    id="jira-issue-template" 
+    id="${createNewIssueWithTemplateOverlayId}" 
     class="hidden fixed top-16 left-1/2 transform -translate-x-1/2 z-[100] bg-overlay-bg dark:bg-overlay-bg-dark border border-overlay-border dark:border-overlay-border-dark rounded-brand shadow-lg" >
     <div class="flex flex-col justify-between space-y-4 py-4">
         <h2 class="text-lg font-semibold uppercase text-xs px-4">Jira Issue Template</h2>
@@ -477,11 +480,11 @@ let getAvailableTeams = () => {
 }
 
 let saveState = (state) => {
-	localStorage.setItem('jira-issue-template-state', JSON.stringify(state))
+	localStorage.setItem(appStateKey, JSON.stringify(state))
 }
 
 let loadState = () => {
-	let state = localStorage.getItem('jira-issue-template-state')
+	let state = localStorage.getItem(appStateKey)
 	if (state) {
 		return JSON.parse(state)
 	}
@@ -490,50 +493,51 @@ let loadState = () => {
 
 let mountApp = () => {
 	let appContainer = document.createElement('div')
-	appContainer.id = 'jira-issue-template-app'
+	appContainer.id = appId
 	document.querySelector('body').appendChild(appContainer)
-	app.mount('#jira-issue-template-app')
+	app.mount(`#${appId}`)
 }
 
 let toggleVisibility = () => {
-	let overlayEl = document.getElementById('jira-issue-template')
-	if (overlayEl) {
-		overlayEl.classList.toggle('hidden')
-		overlayEl.classList.toggle('flex')
-	}
+	let overlayEl = document.getElementById(createNewIssueWithTemplateOverlayId)
+	overlayEl.classList.toggle('hidden')
+	overlayEl.classList.toggle('flex')
 }
 
-let addButtonClickHandler = () => {
-	if (!appMounted) {
-		mountApp()
-		appMounted = true
-	}
+let createNewIssueWithTemplateButtonClickHandler = () => {
 	toggleVisibility()
 }
 
 let addCloseOverlayListener = (toggleButton) => {
-	document.addEventListener('click', (event) => {
-		let overlayEl = document.getElementById('jira-issue-template')
-		if (overlayEl && !overlayEl.contains(event.target) && event.target !== toggleButton && event.target.dataset.role !== 'component') {
-			overlayEl.classList.add('hidden')
+	document.onclick = (event) => {
+		let overlayEl = document.getElementById(createNewIssueWithTemplateOverlayId)
+		if (
+			overlayEl &&
+			!overlayEl.contains(event.target) &&
+			event.target !== toggleButton &&
+			event.target.dataset.role !== 'component' &&
+			overlayEl.classList.contains('flex')
+		) {
 			overlayEl.classList.remove('flex')
+			overlayEl.classList.add('hidden')
 		}
-	})
+	}
 }
 
 let createToggleButton = () => {
 	let toggleButton = document.createElement('button')
+	toggleButton.id = createNewIssueWithTemplateButtonId
 	toggleButton.textContent = '📄'
-	toggleButton.title = 'Jira Issue Template'
+	toggleButton.title = 'Create issue with template'
 	let buttonClasses =
 		'ml-1 px-3 py-[6px] focus:outline-none font-medium bg-primary dark:bg-primary-dark text-white dark:text-slate-900 rounded-brand hover:bg-primary-hover dark:hover:bg-primary-dark-hover'
 	toggleButton.classList.add(...buttonClasses.split(' '))
-	toggleButton.addEventListener('click', addButtonClickHandler)
+	toggleButton.onclick = createNewIssueWithTemplateButtonClickHandler
 	return toggleButton
 }
 
 let appendToggleButton = (toggleButton) => {
-	let wrapperElement = document.querySelector('#createGlobalItem').parentElement
+	let wrapperElement = document.getElementById('createGlobalItem').parentElement
 	if (!wrapperElement) {
 		console.error('🔥 Wrapper element with data-testid="create-button-wrapper" not found.')
 		return
@@ -541,9 +545,38 @@ let appendToggleButton = (toggleButton) => {
 	wrapperElement.appendChild(toggleButton)
 }
 
-window.addEventListener('load', (event) => {
-	console.log('Jira Issue Template App is ready. Starting app...')
-	let toggleButton = createToggleButton()
-	appendToggleButton(toggleButton)
-	addCloseOverlayListener(toggleButton)
-})
+const debounce = (func, wait, immediate = false) => {
+	let timeout
+
+	return (...args) => {
+		const later = () => {
+			clearTimeout(timeout)
+			if (!immediate) func.apply(this, args)
+		}
+
+		const callNow = immediate && !timeout
+
+		clearTimeout(timeout)
+		timeout = setTimeout(later, wait)
+
+		if (callNow) func.apply(this, args)
+	}
+}
+
+const main = () => {
+	// If the app container doesn't exist, mount the app
+	if (!document.getElementById(appId)) {
+		console.log('🚀 Mounting app')
+		mountApp()
+	}
+
+	// If the toggle button doesn't exist, add it
+	if (!document.getElementById(createNewIssueWithTemplateButtonId)) {
+		console.log('🚀 Adding issue template button')
+		let toggleButton = createToggleButton()
+		appendToggleButton(toggleButton)
+		addCloseOverlayListener(toggleButton)
+	}
+}
+
+document.addEventListener('DOMNodeInserted', debounce(main, 100))
