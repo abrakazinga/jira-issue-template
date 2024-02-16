@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DG Jira Issue Template
 // @namespace    https://github.com/abrakazinga/
-// @version      0.4.0
+// @version      0.4.1
 // @author       Alex Braisch
 // @description  Create Jira issues using a predefined template
 // @match      https://jiradg.atlassian.net/*
@@ -59,7 +59,7 @@ tailwind.config = {
 let appTemplate = `
 <div 
     id="${createNewIssueWithTemplateOverlayId}" 
-    class="hidden fixed top-16 left-1/2 transform -translate-x-1/2 z-[100] bg-overlay-bg dark:bg-overlay-bg-dark border border-overlay-border dark:border-overlay-border-dark rounded-brand shadow-lg" >
+    class="hidden fixed top-16 left-1/2 transform -translate-x-1/2 z-[9999] bg-overlay-bg dark:bg-overlay-bg-dark border border-overlay-border dark:border-overlay-border-dark rounded-brand shadow-lg" >
     <div class="flex flex-col justify-between space-y-4 py-4">
         <h2 class="text-lg font-semibold uppercase text-xs px-4">Jira Issue Template</h2>
         
